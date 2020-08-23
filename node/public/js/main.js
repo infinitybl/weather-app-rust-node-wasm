@@ -61,13 +61,13 @@ function displayResults(weather) {
 
   let hilow = document.querySelector(".hi-low");
   hilow.innerText = `High: ${Math.round(
-    weather.main.temp_min
-  )}°c, Low: ${Math.round(weather.main.temp_max)}°c`;
+    weather.main.temp_max
+  )}°c, Low: ${Math.round(weather.main.temp_min)}°c`;
 
   let hilowF = document.querySelector(".hi-lowF");
   hilowF.innerText = `High: ${Math.round(
-    weather.main.temp_minF
-  )}°f, Low: ${Math.round(weather.main.temp_maxF)}°f`;
+    weather.main.temp_maxF
+  )}°f, Low: ${Math.round(weather.main.temp_minF)}°f`;
 
   changeBackground(weather.weather[0].main);
 }

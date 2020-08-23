@@ -4,9 +4,9 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 pub fn convert_temperature(degrees: i32, unit: &str) -> String {
   let temp: f32 = degrees as f32;
-  if unit == "F" {
+  if unit == "C" {
     ((temp - 32.0) / 1.8).to_string()
-  } else { // unit == "C"
+  } else { // unit == "F"
     ((temp * 1.8) + 32.0).to_string()
   }
 }
