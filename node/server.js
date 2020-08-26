@@ -1,7 +1,7 @@
 const express = require("express");
 const config = require("./config.js");
 const fetch = require("node-fetch");
-const { convert_temperature } = require("../pkg/weather_lib.js");
+const { parse_json } = require("../pkg/weather_lib.js");
 
 const app = express();
 const port = 8080;
@@ -29,26 +29,14 @@ app.post("/getWeatherResults", async function (req, res) {
       .status(400)
       .send(`You must pass in the 'searchQuery' parameter in the request body`);
   } else {
-    const result = await getWeatherResults(req.body.searchQuery);
+    let result = await getWeatherResults(req.body.searchQuery);
+    console.log(result);
     if (result.cod === "404") {
       return res.status(result.cod).send(result.message);
+    } else {
+      result = parse_json(JSON.stringify(result));
     }
-    if (result.main.temp) {
-      result.main.tempF = parseInt(
-        convert_temperature(Math.round(result.main.temp), "F")
-      );
-    }
-    if (result.main.temp_min) {
-      result.main.temp_minF = parseInt(
-        convert_temperature(Math.round(result.main.temp_min), "F")
-      );
-    }
-    if (result.main.temp_max) {
-      result.main.temp_maxF = parseInt(
-        convert_temperature(Math.round(result.main.temp_max), "F")
-      );
-    }
-    return res.status(200).send(result);
+    return res.status(200).send(JSON.parse(result));
   }
 });
 
